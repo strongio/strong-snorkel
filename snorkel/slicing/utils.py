@@ -103,6 +103,7 @@ def convert_to_slice_tasks(base_task: Task, slice_names: List[str]) -> List[Task
     # Identify base task head module
     head_module_op = base_task.op_sequence[-1]
     head_module = base_task.module_pool[head_module_op.module_name]
+    original_loss_func = base_task.loss_func
 
     if isinstance(head_module, nn.DataParallel):
         head_module = head_module.module
@@ -218,5 +219,6 @@ def convert_to_slice_tasks(base_task: Task, slice_names: List[str]) -> List[Task
         module_pool=master_module_pool,
         op_sequence=master_op_sequence,
         scorer=base_task.scorer,
+        loss_func=original_loss_func,
     )
     return slice_tasks + [master_task]
