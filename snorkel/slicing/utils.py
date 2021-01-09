@@ -13,7 +13,7 @@ from .modules.slice_combiner import SliceCombinerModule
 
 
 def add_slice_labels(
-    dataloader: DictDataLoader, base_task: Task, S: np.recarray
+    dataloader: DictDataLoader, base_task_name: Task, S: np.recarray
 ) -> None:
     """Modify a dataloader in-place, adding labels for slice tasks.
 
@@ -21,8 +21,8 @@ def add_slice_labels(
     ----------
     dataloader
         A DictDataLoader whose dataset.Y_dict attribute will be modified in place
-    base_task
-       The Task for which we want corresponding slice tasks/labels
+    base_task_name
+       The name of the Task for which we want corresponding slice tasks/labels
     S
         A recarray (output of SFApplier) containing data fields with slice
         indicator information
@@ -37,7 +37,7 @@ def add_slice_labels(
     slice_names = S.dtype.names
 
     Y_dict: Dict[str, np.ndarray] = dataloader.dataset.Y_dict  # type: ignore
-    labels = Y_dict[base_task.name]
+    labels = Y_dict[base_task_name]
 
     for slice_name in slice_names:
         # Gather ind labels
@@ -47,8 +47,8 @@ def add_slice_labels(
         pred_labels = labels.clone()
         pred_labels[~ind_labels.bool()] = -1
 
-        ind_task_name = f"{base_task.name}_slice:{slice_name}_ind"
-        pred_task_name = f"{base_task.name}_slice:{slice_name}_pred"
+        ind_task_name = f"{base_task_name}_slice:{slice_name}_ind"
+        pred_task_name = f"{base_task_name}_slice:{slice_name}_pred"
 
         # Update dataloaders
         Y_dict[ind_task_name] = ind_labels
