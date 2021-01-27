@@ -280,7 +280,7 @@ class MultitaskClassifier(nn.Module):
                     inputs, move_to_device(Y, self.config.device)
                 )
 
-        return loss_dict, count_dict
+        return loss_dict, count_dict, outputs
 
     @torch.no_grad()
     def _calculate_probs(
