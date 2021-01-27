@@ -13,10 +13,12 @@ with open("README.md", "r") as readme_file:
     long_description = readme_file.read()
 
 setup(
-    name="snorkel",
+    name="strong_snorkel",
     version=VERSION["VERSION"],
-    url="https://github.com/snorkel-team/snorkel",
-    description="A system for quickly generating training data with weak supervision",
+    url="https://github.com/strongio/strong-snorkel",
+    description="A system for quickly generating training data with weak supervision, modified by strong.io",
+    author="Snorkel team, Strong Analytics",
+    author_email="contact@strong.io",
     long_description_content_type="text/markdown",
     long_description=long_description,
     license="Apache License 2.0",
